@@ -35,8 +35,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+    # ИСПРАВЛЕНИЕ ЗДЕСЬ: v3 заменено на v4
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: disk-usage-app-${{ matrix.os }}
         path: build/libs/*.jar
