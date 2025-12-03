@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'checkstyle' // Плагин для проверки качества кода (по заданию)
+}
+
+repositories {
+    mavenCentral() // Отсюда скачиваются библиотеки
+}
+
+dependencies {
+    // Библиотека для работы с JSON (для задания)
+    implementation 'com.google.code.gson:gson:2.10.1'
+    
+    // Библиотеки для тестов
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+}
+
+application {
+    // Указываем главный класс (создадим его позже)
+    mainClass = 'ru.student.diskusage.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
