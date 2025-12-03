@@ -6,27 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Парсер вывода команд df (Linux) и wmic (Windows).
+ * Парсер вывода команд df (Linux) и PowerShell (Windows).
  */
 public class DiskParser {
 
-    /**
-     * Парсит строки вывода в список объектов DiskInfo.
-     * @param lines строки вывода консоли
-     * @param osName имя операционной системы
-     * @return список дисков
-     */
     public List<DiskInfo> parse(List<String> lines, String osName) {
         List<DiskInfo> disks = new ArrayList<>();
         boolean isWindows = osName.toLowerCase().contains("win");
 
         for (String line : lines) {
             line = line.trim();
-            if (line.isEmpty() || line.startsWith("Filesystem") || line.startsWith("Caption")) continue;
+            // Игнорируем пустые строки и заголовки
+            if (line.isEmpty() || line.startsWith("Filesystem") || line.startsWith("Caption") || line.startsWith("-")) continue;
 
             if (isWindows) {
-                // Ожидаем: Caption FreeSpace Size (например: C: 5000000 10000000)
+                // PowerShell: C:       85899345920   107374182400
                 String[] parts = line.split("\\s+");
+                // Нам нужно хотя бы 3 элемента: Имя, Свободно, Всего
                 if (parts.length >= 3) {
                     try {
                         String name = parts[0];
@@ -36,11 +32,11 @@ public class DiskParser {
                         int percent = (total > 0) ? (int) ((used * 100) / total) : 0;
                         disks.add(new DiskInfo(name, total, used, free, percent));
                     } catch (NumberFormatException e) {
-                        // Игнорируем строки, которые не удалось распарсить
+                        // Пропускаем строки, где нет чисел
                     }
                 }
             } else {
-                // Linux: /dev/sda1 97G 20G 73G 22% /
+                // Linux logic
                 String[] parts = line.split("\\s+");
                 if (parts.length >= 5) {
                     try {
@@ -50,10 +46,10 @@ public class DiskParser {
                         long free = SizeConverter.parseSize(parts[3]);
                         String percentStr = parts[4].replace("%", "");
                         int percent = percentStr.matches("\\d+") ? Integer.parseInt(percentStr) : 0;
-                        
+
                         disks.add(new DiskInfo(name, total, used, free, percent));
                     } catch (Exception e) {
-                        // Игнорируем ошибки парсинга
+                        // ignore
                     }
                 }
             }
