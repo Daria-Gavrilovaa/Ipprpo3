@@ -1,24 +1,30 @@
 plugins {
     id 'java'
     id 'application'
-    id 'checkstyle' // Плагин для проверки качества кода (по заданию)
+    id 'checkstyle'
 }
 
 repositories {
-    mavenCentral() // Отсюда скачиваются библиотеки
+    mavenCentral()
 }
 
 dependencies {
-    // Библиотека для работы с JSON (для задания)
+    // Библиотека для JSON
     implementation 'com.google.code.gson:gson:2.10.1'
-    
+
     // Библиотеки для тестов
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    
+    // ВАЖНО: Добавлена эта строка, чтобы исправить вашу ошибку
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 application {
-    // Указываем главный класс (создадим его позже)
     mainClass = 'ru.student.diskusage.App'
+}
+
+checkstyle {
+    toolVersion = "10.12.0"
 }
 
 tasks.named('test') {
