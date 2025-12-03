@@ -69,15 +69,13 @@ output.units=GB
 Откройте папку с проектом.
 Нажмите правой кнопкой мыши на пустом месте -> "Открыть в терминале" (или PowerShell).
 Введите команду:
-code
-Powershell
+```powershell
 .\gradlew.bat build
 Дождитесь надписи BUILD SUCCESSFUL.
 Инструкция для Linux / macOS:
 Откройте терминал в папке проекта.
 Введите команду:
-code
-Bash
+```bash
 ./gradlew build
 Дождитесь надписи BUILD SUCCESSFUL.
 После успешной сборки готовый файл программы (disk-usage-report.jar) появится в папке build/libs/.
@@ -85,12 +83,10 @@ Bash
 Тесты — это автоматическая проверка того, что программа работает правильно и не содержит грубых ошибок.
 Команда для запуска:
 Windows:
-code
-Powershell
+```powershell
 .\gradlew.bat test
 Linux / macOS:
-code
-Bash
+```bash
 ./gradlew test
 Ожидаемый результат:
 Если всё хорошо, вы увидите сообщение BUILD SUCCESSFUL.
@@ -98,11 +94,9 @@ Bash
 Как запустить приложение
 Для быстрого запуска из консоли используйте команду:
 Windows:
-code
-Powershell
+```powershell
 .\gradlew.bat run
 Linux / macOS:
-code
-Bash
+```bash
 ./gradlew run
 После выполнения команды вы увидите JSON-отчет прямо в окне терминала.
